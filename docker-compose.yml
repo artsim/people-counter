@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  db_jicho:
+    image: postgres:12.3-alpine
+    container_name: db_jicho
+    environment:
+      - POSTGRES_USER=jicho
+      - POSTGRES_PASSWORD=6EC^!r3e
+      - POSTGRES_DB=jichodev
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    stdin_open: true
+    tty: true
+  redis_jicho:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+  web_jicho:
+    container_name: web_jicho
+    build: .
+    volumes:
+      - ./:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db_jicho
+      - redis_jicho
+    environment:
+      DEBUG: 'true'
+    stdin_open: true
+    tty: true
+
+
+volumes:
+  web_jicho:
+  pgdata:
+  redisdata:
+
