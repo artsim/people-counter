@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "jicho.wsgi.application"
+ASGI_APPLICATION = "jicho.asgi.application"
 
 
 # Database
