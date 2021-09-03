@@ -3,7 +3,8 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 class DataConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        print(self.scope)
+        self.groupname = "counter"
+        await self.channel_layer.group_add(self.groupname, self.channel_name)
         await self.accept()
 
     async def disconnect(self, code):
